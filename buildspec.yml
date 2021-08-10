@@ -22,7 +22,7 @@ phases:
   build:
     commands:
       #- mvn test     
-      - sonar-scanner -Dsonar.login=3482c192a5ee1ff853ead39b584bc602269758b6
+      - sonar-scanner -Dsonar.login=3482c192a5ee1ff853ead39b584bc602269758b6 -X
       - sleep 5
       - curl http://34.230.8.82:9000/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
