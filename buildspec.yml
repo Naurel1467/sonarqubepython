@@ -4,12 +4,13 @@ phases:
   install:
     runtime-versions:
        python: 3.7
-       java: openjdk16
+       java: corretto11
   pre_build:
     commands:
       - apt-get update
       - apt-get install -y jq
      # - apt install openjdk-16-jdk -y 
+      -  sudo update-alternatives --config java
       - java --version
       #- apt install python3-pip -y
      # - apt-get install -y maven
