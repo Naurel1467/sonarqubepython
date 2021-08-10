@@ -10,7 +10,7 @@ phases:
       - apt-get update
       - apt-get install -y jq
      # - apt install openjdk-16-jdk -y 
-      -  sudo update-alternatives --config java
+      - update-alternatives --config java
       - java --version
       #- apt install python3-pip -y
      # - apt-get install -y maven
