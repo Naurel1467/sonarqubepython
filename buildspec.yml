@@ -4,6 +4,7 @@ phases:
   install:
     runtime-versions:
        python: 3.7
+       java: corretto8
   pre_build:
     commands:
       - apt-get update
