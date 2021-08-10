@@ -4,11 +4,12 @@ phases:
   install:
     runtime-versions:
        python: 3.7
-       java: corretto8
+       java: corretto11
   pre_build:
     commands:
       - apt-get update
       - apt-get install -y jq
+      - java --version
       #- apt install python3-pip -y
      # - apt-get install -y maven
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip -P /opt
