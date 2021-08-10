@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+  pre_build:
+    commands:
+      - apt-get update
+      - apt-get install -y jq
+      - apt install python3-pip -y
+     # - apt-get install -y maven
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip -P /opt
+      - unzip /opt/sonar-scanner-cli-3.3.0.1492-linux.zip 
+      - mv sonar-scanner-3.3.0.1492-linux/ /opt/sonar-scanner
+      - echo -e "sonar_project_key=python\nsonar.host.url=http://34.230.8.82:9000/\nsonar.login=3482c192a5ee1ff853ead39b584bc602269758b6\nsonar.projectKey=python\nsonar.sources=." > /opt/sonar-scanner/conf/sonar-scanner.properties
+      - cat /opt/sonar-scanner/conf/sonar-scanner.properties
+      - export PATH="/opt/sonar-scanner/bin:$PATH"
+     
+      #-# sonar_project_key="$REPOSITORY_NAME"
+  build:
+    commands:
+      #- mvn test     
+      - sonar-scanner -Dsonar.login=3482c192a5ee1ff853ead39b584bc602269758b6
+      - sleep 5
+      - curl http://34.230.8.82:9000/api/qualitygates/project_status?projectKey=$Project >result.json
+      - cat result.json
+      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
